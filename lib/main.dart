@@ -212,13 +212,13 @@ class _PharmacyByCommunePageState extends State<PharmacyByCommunePage> {
                   return ListTile(
                     leading: const Icon(
                       Icons.local_pharmacy,
-                      color: Colors.green,
+                      color: Colors.blue,
                     ),
                     title: Text(ph.nomphar.isEmpty ? 'Pharmacie' : ph.nomphar),
                     subtitle: Text(
                       [
                         ph.situationgeo,
-                        ph.telphar,
+                        ph.telphar, //
                       ].where((e) => e.trim().isNotEmpty).join(' • '),
                     ),
                   );
