@@ -212,7 +212,7 @@ class _PharmacyByCommunePageState extends State<PharmacyByCommunePage> {
                   return ListTile(
                     leading: const Icon(
                       Icons.local_pharmacy,
-                      color: Colors.blue,
+                      color: Colors.green,
                     ),
                     title: Text(ph.nomphar.isEmpty ? 'Pharmacie' : ph.nomphar),
                     subtitle: Text(
