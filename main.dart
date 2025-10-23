@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'commune.dart';
-import 'pharmcie2.dart';
-import 'serviceapi.dart';
+import 'package:myagemas/commune.dart';
+import 'package:myagemas/pharmcie2.dart';
+import 'package:myagemas/serviceapi.dart';
 
 void main() {
   runApp(const PharmaciesApp());
