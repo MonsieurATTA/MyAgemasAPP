@@ -74,9 +74,13 @@ class _CommuneListPageState extends State<CommuneListPage> {
       appBar: AppBar(title: const Text('Communes')),
       body:
           _isLoading // Si l'application est en train de charger les données
-          ? const Center(child: CircularProgressIndicator())
-          : _error != null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            ) // Affiche un indicateur de chargement
+          : _error !=
+                null // Si une erreur est survenue lors du chargement
           ? Center(
+              // Affiche le message d'erreur
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -91,6 +95,7 @@ class _CommuneListPageState extends State<CommuneListPage> {
                     ),
                     const SizedBox(height: 8),
                     FilledButton(
+                      // Bouton pour réessayer de charger les communes
                       onPressed: _loadCommunes,
                       child: const Text('Réessayer'),
                     ),
@@ -99,8 +104,10 @@ class _CommuneListPageState extends State<CommuneListPage> {
               ),
             )
           : RefreshIndicator(
+              // Si les données sont chargées avec succès
               // Permet de rafraîchir la liste en tirant vers le bas
-              onRefresh: _loadCommunes,
+              onRefresh:
+                  _loadCommunes, // Fonction appelée lors du rafraîchissement
               child: ListView.separated(
                 physics:
                     const AlwaysScrollableScrollPhysics(), // Permet de faire défiler même si la liste est courte
@@ -111,7 +118,9 @@ class _CommuneListPageState extends State<CommuneListPage> {
                       _communes[index]; // Récupère la commune à l'index donné
                   return ListTile(
                     title: Text(c.commune.isEmpty ? 'Commune' : c.commune),
-                    trailing: const Icon(Icons.chevron_right),
+                    trailing: const Icon(
+                      Icons.chevron_right_sharp,
+                    ), // Icône indiquant qu'on peut cliquer pour plus de détails
                     onTap: () {
                       Navigator.of(context).push(
                         // Navigue vers la page des pharmacies de la commune sélectionnée
@@ -169,7 +178,7 @@ class _PharmacyByCommunePageState extends State<PharmacyByCommunePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Pharmacies • ${widget.commune.commune}')),
+      appBar: AppBar(title: Text('Pharmacies  ${widget.commune.commune}')),
       body:
           _isLoading // Si l'application est en train de charger les données
           ? const Center(child: CircularProgressIndicator())
