@@ -10,16 +10,29 @@ final _baseUrl = 'http://apimoka.agemas96.com';
 // Récupère toutes les pharmacies
 Future<List<Pharmacy>> fetchAllPharmacies() async {
   final uri = Uri.parse('$_baseUrl/pharmacies');
-  final httpClient = HttpClient();
+  final httpClient =
+      HttpClient(); // Crée un client HTTP(comme le navigateur) qui va envoyer la requête à ton serveur.
   try {
-    final request = await httpClient.getUrl(uri);
-    request.headers.set(HttpHeaders.acceptHeader, 'application/json');
-    final response = await request.close();
+    final request = await httpClient.getUrl(
+      uri,
+    ); // Crée une requête GET pour l'URI spécifiée.
+    request.headers.set(
+      HttpHeaders.acceptHeader,
+      'application/json',
+    ); // Indique que l'on attend une réponse au format JSON.
+    final response = await request
+        .close(); // Envoie la requête et attend la réponse du serveur.
     if (response.statusCode != 200) {
       throw HttpException('Status ${response.statusCode}');
     }
-    final body = await utf8.decoder.bind(response).join();
-    final decoded = jsonDecode(body);
+    final body = await utf8.decoder
+        .bind(response)
+        .join(); // Lit le corps de la réponse en tant que chaîne UTF-8.
+    final decoded = jsonDecode(
+      body,
+    ); // Décode la chaîne JSON en une structure de données Dart.
+
+    // Gère les différents formats de réponse possibles
     List list;
     if (decoded is List) {
       list = decoded;
@@ -28,7 +41,8 @@ Future<List<Pharmacy>> fetchAllPharmacies() async {
     } else {
       return [];
     }
-    // Filtrer côté client par id de commune car l'API peut renvoyer tout
+    // Convertir en liste de Pharmacy
+    //on crée un objet Pharmacy grâce à la méthode fromJson() (définie dans pharmcie2.dart).
     return list
         .map<Pharmacy>((e) => Pharmacy.fromJson(e as Map<String, dynamic>))
         .toList();
@@ -68,15 +82,16 @@ Future<List<Commune>> fetchCommunes() async {
 }
 
 // Récupère les pharmacies d'une commune donnée
+// Essayer les deux formats d'URI possibles
 Future<List<Pharmacy>> fetchPharmaciesByCommune(int idCommune) async {
-  // Selon l'API: soit /pharmacies?idcom=, soit /pharmacies/{idcom}
   final candidateUris = <Uri>[
     Uri.parse('$_baseUrl/pharmacies?idcom=$idCommune'),
     Uri.parse('$_baseUrl/pharmacies/$idCommune'),
-  ]; // Essayer les deux formats
+  ];
   final httpClient = HttpClient();
   try {
     for (final uri in candidateUris) {
+      // Le programme teste chaque lien jusqu’à ce que l’un fonctionne.
       try {
         final request = await httpClient.getUrl(uri);
         request.headers.set(HttpHeaders.acceptHeader, 'application/json');
