@@ -19,7 +19,7 @@ class PageFamssur extends StatelessWidget {
             const SizedBox(height: 30),
             const Text(
               'Contenu Famssur à venir',
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(fontSize: 26),
             ),
           ],
         ),
