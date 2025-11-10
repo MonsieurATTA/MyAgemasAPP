@@ -1,11 +1,7 @@
-/* import 'package:flutter/material.dart';
-import 'commune.dart';
-import 'pharmcie2.dart';
-import 'serviceapi.dart';
-
-void main() {
-  runApp(const PharmaciesApp());
-}
+import 'package:flutter/material.dart';
+import 'package:myagemas/commune.dart';
+import 'package:myagemas/pharmacie.dart';
+import 'package:myagemas/serviceapi.dart';
 
 class PharmaciesApp extends StatelessWidget {
   const PharmaciesApp({super.key});
@@ -236,89 +232,4 @@ class _PharmacyByCommunePageState extends State<PharmacyByCommunePage> {
             ),
     );
   }
-} */
-
-
-
-
-/* import 'package:flutter/material.dart';
-import 'serviceAPI.dart';
-import 'pharmcie2.dart';
-
-void main() {
-  runApp(const MyApp());
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Pharmacies",
-      theme: ThemeData(primarySwatch: Colors.green),
-      home: const PharmaciesPage(),
-    );
-  }
-}
-
-class PharmaciesPage extends StatefulWidget {
-  const PharmaciesPage({super.key});
-
-  @override
-  State<PharmaciesPage> createState() => _PharmaciesPageState();
-}
-
-class _PharmaciesPageState extends State<PharmaciesPage> {
-  late Future<List<Pharmacy>> pharmacies;
-
-  @override
-  void initState() {
-    super.initState();
-    pharmacies = fetchPharmacies();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Liste des pharmacies")),
-      body: FutureBuilder<List<Pharmacy>>(
-        future: pharmacies,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Erreur : ${snapshot.error}"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("Aucune pharmacie trouvée"));
-          } else {
-            final data = snapshot.data!;
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final pharmacie = data[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 10,
-                  ),
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.local_hospital,
-                      color: Colors.green,
-                    ),
-                    title: Text(pharmacie.nomphar),
-                    subtitle: Text((pharmacie.situationgeo)),
-                    trailing: Text(pharmacie.telphar),
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
-  }
-}
- */

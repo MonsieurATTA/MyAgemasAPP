@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'commune.dart';
-import 'pharmcie2.dart';
+import 'pharmacie.dart';
 
 final _baseUrl = 'http://apimoka.agemas96.com';
 

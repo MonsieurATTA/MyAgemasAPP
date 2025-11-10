@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myagemas/Pages/home/widgets/Produits.dart';
+import 'package:myagemas/Pages/home/widgets/conseilsante.dart';
+/* import 'package:myagemas/Pages/home/widgets/Produits.dart'; */
 
 class Category extends StatelessWidget {
   Category({super.key});
@@ -31,7 +33,7 @@ class Category extends StatelessWidget {
   // L'arrièere-plan de la section catégorie en blanc avec des coins arrondis en haut
   Widget build(BuildContext context) {
     return Container(
-      height: 420,
+      height: 1000,
       decoration: const BoxDecoration(
         color: Color(0xFFF6F8FF),
         borderRadius: BorderRadius.only(
@@ -89,6 +91,15 @@ class Category extends StatelessWidget {
             ),
           ),
           Produits(),
+
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Text(
+              'Conseils santé',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          ),
+          Conseilsante(),
         ],
       ),
     );
