@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myagemas/Pages/detail/affichecommune.dart';
 import 'package:myagemas/models/assurance.dart';
 
+//A Lire
+// OBJET DE CETTE PARTIE : C'est là où on clique pour afficher la liste des commune pour pouvoir retrouver les pharmacies
+
 class Produits extends StatelessWidget {
   Produits({super.key});
 

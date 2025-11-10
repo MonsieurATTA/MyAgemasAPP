@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:myagemas/Pages/detail/pageautomoto.dart';
+import 'package:myagemas/Pages/detail/pagefamssur.dart';
+import 'package:myagemas/Pages/detail/pagemrh.dart';
+import 'package:myagemas/Pages/detail/pagesante.dart';
 import 'package:myagemas/Pages/home/widgets/Produits.dart';
 import 'package:myagemas/Pages/home/widgets/conseilsante.dart';
+import 'package:myagemas/Pages/detail/pagmoka.dart';
 /* import 'package:myagemas/Pages/home/widgets/Produits.dart'; */
+
+//A LIRE
+// LA page (Blanche) où j'appelle deux sous page "produit.dart","Conseilsante.dart" et j'affiche toues les inforamations sur les contrats d'assuarance
 
 class Category extends StatelessWidget {
   Category({super.key});
@@ -9,23 +17,28 @@ class Category extends StatelessWidget {
   final categories = [
     {
       'icon': Icons.person_4_outlined,
-      'label': 'Adhérents',
-      'color': Color(0xFF605CF4),
+      'label': 'Moka',
+      'color': Color.fromARGB(255, 11, 54, 230),
     },
     {
-      'icon': Icons.people_outline_sharp,
-      'label': 'Bénéficiaires',
-      'color': Color(0xFFFC77A6),
+      'icon': Icons.motorcycle_sharp,
+      'label': 'Auto-Moto',
+      'color': Color.fromARGB(255, 241, 241, 44),
     },
     {
-      'icon': Icons.pattern_outlined,
-      'label': 'partenaires',
-      'color': Color(0xFF00C9A7),
+      'icon': Icons.medical_services,
+      'label': 'Sante',
+      'color': Color.fromARGB(255, 0, 195, 255),
     },
     {
-      'icon': Icons.health_and_safety,
-      'label': 'Santé',
+      'icon': Icons.mediation_outlined,
+      'label': 'Famssur',
       'color': Color(0xFFFFB800),
+    },
+    {
+      'icon': Icons.house,
+      'label': 'MRH',
+      'color': Color.fromARGB(255, 117, 221, 47),
     },
   ];
 
@@ -53,32 +66,63 @@ class Category extends StatelessWidget {
                 horizontal: 25,
               ), // Especment à gauche à droite
               scrollDirection: Axis.horizontal,
-              itemBuilder: ((context, index) => Column(
-                children: [
-                  const SizedBox(height: 25),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: categories[index]['color'] as Color,
-                    ),
-                    child: Icon(
-                      categories[index]['icon'] as IconData,
-                      color: Colors.white,
-                      size: 40,
-                    ),
+              itemBuilder: ((context, index) {
+                final String label = categories[index]['label'] as String;
+                return InkWell(
+                  borderRadius: BorderRadius.circular(15),
+                  onTap: () {
+                    if (label == 'Moka') {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const PageadherentMOKA(),
+                        ),
+                      );
+                    } else if (label == 'Auto-Moto') {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const PageAutoMoto()),
+                      );
+                    } else if (label == 'Sante') {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const PageSante()),
+                      );
+                    } else if (label == 'Famssur') {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const PageFamssur()),
+                      );
+                    } else if (label == 'MRH') {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const PageMRH()),
+                      );
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 25),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: categories[index]['color'] as Color,
+                        ),
+                        child: Icon(
+                          categories[index]['icon'] as IconData,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        label,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    categories[index]['label'] as String,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              )),
+                );
+              }),
               separatorBuilder: ((context, index) => const SizedBox(width: 33)),
               itemCount: categories.length,
             ),

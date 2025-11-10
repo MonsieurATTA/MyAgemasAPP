@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//A lIRE
+// OBJECTIF DE CETTE PAGE : J'affiche le debut de page avec le profile
+
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
 

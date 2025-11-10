@@ -1,9 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:myagemas/Pages/home/widgets/Headers.dart';
 import 'package:myagemas/Pages/home/widgets/category.dart';
 import 'package:myagemas/Pages/home/widgets/recherche.dart';
+
+//A LIRE
+//OBJECTIF DE LA PAGE : La page global d'écran où j'appelle le header.dart(profil), recherche.dart(barre de recherche), category.dart(adhrt, benef, pharmacie, conseilsante)
 
 // Page d'accueil de l'application
 class HomePage extends StatelessWidget {

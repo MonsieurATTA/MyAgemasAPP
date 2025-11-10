@@ -1,3 +1,5 @@
+//LES OBJET QUE J'UTILISE POUR POUR LE BODY DU BOUTON PHARMACIE DANS PRODUIT.DART
+
 class Assurance {
   String bgImage;
   String icon;
