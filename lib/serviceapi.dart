@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'commune.dart';
+import 'moka_models.dart';
 import 'pharmacie.dart';
 
 final _baseUrl = 'http://apimoka.agemas96.com';
@@ -137,6 +138,74 @@ Future<List<Pharmacy>> fetchPharmaciesByCommune(int idCommune) async {
   } finally {
     httpClient.close(force: true);
   }
+}
+
+Future<List<Adherent>> fetchAdherentsByClient(String clientId) async {
+  final trimmed = clientId.trim();
+  if (trimmed.isEmpty) {
+    return [];
+  }
+  final uri = Uri.parse(
+    '$_baseUrl/contrats/moka/client/${Uri.encodeComponent(trimmed)}',
+  );
+  return _fetchMokaList(uri, (json) => Adherent.fromJson(json));
+}
+
+Future<List<Beneficiaire>> fetchBeneficiairesByAdherent(
+  String adherentId,
+) async {
+  final trimmed = adherentId.trim();
+  if (trimmed.isEmpty) {
+    return [];
+  }
+  final uri = Uri.parse(
+    '$_baseUrl/beneficiaires/contrat/moka/client/${Uri.encodeComponent(trimmed)}',
+  );
+  return _fetchMokaList(uri, (json) => Beneficiaire.fromJson(json));
+}
+
+Future<List<T>> _fetchMokaList<T>(
+  Uri uri,
+  T Function(Map<String, dynamic>) mapper,
+) async {
+  final httpClient = HttpClient();
+  try {
+    final request = await httpClient.getUrl(uri);
+    request.headers.set(HttpHeaders.acceptHeader, 'application/json');
+    final response = await request.close();
+    if (response.statusCode != 200) {
+      throw HttpException('Status ${response.statusCode}');
+    }
+    final body = await utf8.decoder.bind(response).join();
+    final decoded = jsonDecode(body);
+    final list = _normalizeDecoded(decoded);
+    return list
+        .where((e) => e is Map)
+        .map(
+          (e) => mapper(Map<String, dynamic>.from(e as Map)),
+        )
+        .toList();
+  } finally {
+    httpClient.close(force: true);
+  }
+}
+
+List<dynamic> _normalizeDecoded(dynamic decoded) {
+  if (decoded is List) {
+    return decoded;
+  }
+  if (decoded is Map<String, dynamic>) {
+    final data = decoded['data'];
+    if (data is List) {
+      return data;
+    }
+    final items = decoded['items'];
+    if (items is List) {
+      return items;
+    }
+    return [decoded];
+  }
+  return <dynamic>[];
 }
 
 /* import 'dart:convert';
