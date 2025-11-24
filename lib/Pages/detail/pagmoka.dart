@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myagemas/moka_config.dart';
 import 'package:myagemas/moka_models.dart';
 import 'package:myagemas/serviceapi.dart';
@@ -107,7 +108,9 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adhérents Moka'),
+        backgroundColor: Colors.white,
       ),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -150,6 +153,7 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
         itemBuilder: (context, index) {
           final adherent = _adherents[index];
           return Card(
+            color: Colors.white,
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -159,11 +163,7 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        child: Text(
-                          _initials(adherent.nomComplet),
-                        ),
-                      ),
+                      CircleAvatar(child: Text(_initials(adherent.nomComplet))),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
@@ -221,10 +221,7 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
         final formattedValue = entry.key.toLowerCase().contains('date')
             ? _formatDate(entry.value)
             : entry.value;
-        return _InfoChip(
-          label: entry.key,
-          value: formattedValue,
-        );
+        return _InfoChip(label: entry.key, value: formattedValue);
       }).toList(),
     );
   }
@@ -281,7 +278,9 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.family_restroom_outlined),
           title: Text(
-            benef.code.isEmpty ? 'Code bénéficiaire non renseigné' : 'Code: ${benef.code}',
+            benef.code.isEmpty
+                ? 'Code bénéficiaire non renseigné'
+                : 'Code: ${benef.code}',
             style: theme.textTheme.titleSmall,
           ),
           subtitle: Column(
@@ -291,13 +290,15 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
               if (benef.prenom.isNotEmpty) Text('Prénom: ${benef.prenom}'),
               if (benef.dateNaissance.isNotEmpty)
                 Text('Date de naissance: ${_formatDate(benef.dateNaissance)}'),
-              if (benef.relation.isNotEmpty) Text('Lien: ${benef.relation}'),
-              if (benef.telephone.isNotEmpty) Text('Téléphone: ${benef.telephone}'),
+              if (benef.statutbene.isNotEmpty)
+                Text('Statut: ${benef.statutbene}'),
+              if (benef.cellulairebene.isNotEmpty)
+                Text('Téléphone: ${benef.cellulairebene}'),
             ],
           ),
-          trailing: benef.statut.isEmpty
+          trailing: benef.statutbene.isEmpty
               ? null
-              : _StatusChip(label: benef.statut),
+              : _StatusChip(label: benef.statutbene),
         );
       }).toList(),
     );
@@ -324,16 +325,12 @@ class _InfoChip extends StatelessWidget {
         children: [
           Text(
             label,
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 2),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          Text(value, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
@@ -416,22 +413,18 @@ class _ClientHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         border: Border(
-          bottom: BorderSide(
-            color: theme.colorScheme.outlineVariant,
-          ),
+          bottom: BorderSide(color: theme.colorScheme.outlineVariant),
         ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Client Moka',
-                  style: theme.textTheme.titleMedium,
-                ),
+                Text('Client Moka', style: theme.textTheme.titleMedium),
                 const SizedBox(height: 4),
                 Text(
                   clientId.isEmpty
@@ -463,8 +456,9 @@ String _initials(String name) {
   final trimmed = name.trim();
   if (trimmed.isEmpty) return '?';
   final parts = trimmed.split(RegExp(r'\s+'));
-  final String firstInitial =
-      parts.first.isNotEmpty ? parts.first.substring(0, 1) : '?';
+  final String firstInitial = parts.first.isNotEmpty
+      ? parts.first.substring(0, 1)
+      : '?';
   String secondInitial = '';
   if (parts.length > 1 && parts.last.isNotEmpty) {
     secondInitial = parts.last.substring(0, 1);
@@ -482,8 +476,9 @@ String _formatDate(String raw) {
   try {
     parsed = DateTime.parse(normalized);
   } catch (_) {
-    final match = RegExp(r'^(?<d>\d{1,2})-(?<m>\d{1,2})-(?<y>\d{4})$')
-        .firstMatch(normalized);
+    final match = RegExp(
+      r'^(?<d>\d{1,2})-(?<m>\d{1,2})-(?<y>\d{4})$',
+    ).firstMatch(normalized);
     if (match != null) {
       final day = int.tryParse(match.namedGroup('d') ?? '');
       final month = int.tryParse(match.namedGroup('m') ?? '');
@@ -501,4 +496,3 @@ String _formatDate(String raw) {
   final year = parsed.year.toString().padLeft(4, '0');
   return '$day-$month-$year';
 }
-

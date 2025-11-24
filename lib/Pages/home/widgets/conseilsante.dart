@@ -10,20 +10,20 @@ class Conseilsante extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       /* color: Colors.red, */
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(15),
       child: Column(
         children: sante
             .map(
               (sante) => Container(
-                padding: const EdgeInsets.all(15),
-                margin: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 1),
                 child: Row(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image.asset(sante.bgImage, width: 60),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 5),
                     Expanded(
                       child: Column(
                         children: [
@@ -34,7 +34,7 @@ class Conseilsante extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 1),
+                          const SizedBox(height: 2),
                         ],
                       ),
                     ),

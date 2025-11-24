@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myagemas/Pages/home/Home.dart';
+import 'package:myagemas/Page%20connexion/connexion.dart';
+/* import 'package:myagemas/Pages/home/Home.dart'; */
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'MyAGEMAS',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      /* home: HomePage(), */
+      home: Connexion(),
     );
   }
 }

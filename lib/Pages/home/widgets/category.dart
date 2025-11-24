@@ -131,7 +131,11 @@ class Category extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: const Text(
               'retrouvez les pharmacies',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                height: 3,
+              ),
             ),
           ),
           Produits(),
@@ -140,7 +144,11 @@ class Category extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: const Text(
               'Conseils santé',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                height: 3,
+              ),
             ),
           ),
           Conseilsante(),

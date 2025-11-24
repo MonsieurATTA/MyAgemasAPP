@@ -67,7 +67,8 @@ class Adherent {
     ]);
 
     return Adherent(
-      id: _pickString(json, const [
+      id:
+          _pickString(json, const [
             'idadherent',
             'id_adherent',
             'idadh',
@@ -80,7 +81,8 @@ class Adherent {
       nom: lastName ?? '',
       prenom: firstName ?? '',
       nomComplet: _concatName(fullName, firstName, lastName),
-      numeroContrat: _pickString(json, const [
+      numeroContrat:
+          _pickString(json, const [
             'numcontrat',
             'numero_contrat',
             'contrat',
@@ -91,7 +93,8 @@ class Adherent {
             'numéro contrat',
           ]) ??
           '',
-      produit: _pickString(json, const [
+      produit:
+          _pickString(json, const [
             'produit',
             'typecontrat',
             'formule',
@@ -100,14 +103,11 @@ class Adherent {
             'gamme',
           ]) ??
           '',
-      statut: (_pickString(json, const [
-            'statut',
-            'status',
-            'etat',
-            'situation',
-          ]) ??
+      statut:
+          (_pickString(json, const ['statut', 'status', 'etat', 'situation']) ??
           ''),
-      dateEffet: _pickString(json, const [
+      dateEffet:
+          _pickString(json, const [
             'dateeffet',
             'date_effet',
             'date_debut',
@@ -116,28 +116,26 @@ class Adherent {
             'effet',
           ]) ??
           '',
-      dateNaissance: _pickString(json, const [
+      dateNaissance:
+          _pickString(json, const [
+            'datenais',
             'datenaissance',
             'date_naissance',
-            'datenais',
             'datenaisadherent',
             'date_naiss',
           ]) ??
           '',
-      lieuNaissance: _pickString(json, const [
+      lieuNaissance:
+          _pickString(json, const [
             'lieunaissance',
             'lieu_naissance',
             'lieunais',
             'lieu_naiss',
           ]) ??
           '',
-      email: _pickString(json, const [
-            'email',
-            'mail',
-            'courriel',
-          ]) ??
-          '',
-      telephone: _pickString(json, const [
+      email: _pickString(json, const ['email', 'mail', 'courriel']) ?? '',
+      telephone:
+          _pickString(json, const [
             'telephone',
             'tel',
             'portable',
@@ -146,7 +144,8 @@ class Adherent {
             'teladherent',
           ]) ??
           '',
-      cellulaire: _pickString(json, const [
+      cellulaire:
+          _pickString(json, const [
             'celadherent',
             'cel',
             'cellulaire',
@@ -154,7 +153,8 @@ class Adherent {
             'gsm',
           ]) ??
           '',
-      cumulCotise: _pickString(json, const [
+      cumulCotise:
+          _pickString(json, const [
             'cumulcotise',
             'cumul_cotise',
             'cumulcotisation',
@@ -164,7 +164,8 @@ class Adherent {
             'totcotise',
           ]) ??
           '',
-      cotisationAdherent: _pickString(json, const [
+      cotisationAdherent:
+          _pickString(json, const [
             'cotisationadherent',
             'cotisation_adh',
             'cotisationadh',
@@ -172,7 +173,8 @@ class Adherent {
             'cotis',
           ]) ??
           '',
-      police: _pickString(json, const [
+      police:
+          _pickString(json, const [
             'police',
             'numero_police',
             'num_police',
@@ -185,23 +187,21 @@ class Adherent {
   }
 
   List<MapEntry<String, String>> get details => [
-        if (nom.isNotEmpty) MapEntry('Nom', nom),
-        if (prenom.isNotEmpty) MapEntry('Prénom', prenom),
-        if (produit.isNotEmpty) MapEntry('Produit', produit),
-        if (statut.isNotEmpty) MapEntry('Statut', statut),
-        if (dateEffet.isNotEmpty) MapEntry("Date d'effet", dateEffet),
-        if (dateNaissance.isNotEmpty)
-          MapEntry('Date de naissance', dateNaissance),
-        if (lieuNaissance.isNotEmpty)
-          MapEntry('Lieu de naissance', lieuNaissance),
-        if (email.isNotEmpty) MapEntry('Email', email),
-        if (telephone.isNotEmpty) MapEntry('Téléphone', telephone),
-        if (cellulaire.isNotEmpty) MapEntry('Cel', cellulaire),
-        if (cumulCotise.isNotEmpty) MapEntry('Cumul cotisé', cumulCotise),
-        if (cotisationAdherent.isNotEmpty)
-          MapEntry('Cotisation adhérent', cotisationAdherent),
-        if (police.isNotEmpty) MapEntry('Police', police),
-      ];
+    if (nom.isNotEmpty) MapEntry('Nom', nom),
+    if (prenom.isNotEmpty) MapEntry('Prénom', prenom),
+    if (produit.isNotEmpty) MapEntry('Produit', produit),
+    if (statut.isNotEmpty) MapEntry('Statut', statut),
+    if (dateEffet.isNotEmpty) MapEntry("Date d'effet", dateEffet),
+    if (dateNaissance.isNotEmpty) MapEntry('Date de naissance', dateNaissance),
+    if (lieuNaissance.isNotEmpty) MapEntry('Lieu de naissance', lieuNaissance),
+    if (email.isNotEmpty) MapEntry('Email', email),
+    if (telephone.isNotEmpty) MapEntry('Téléphone', telephone),
+    if (cellulaire.isNotEmpty) MapEntry('Cel', cellulaire),
+    if (cumulCotise.isNotEmpty) MapEntry('Cumul cotisé', cumulCotise),
+    if (cotisationAdherent.isNotEmpty)
+      MapEntry('Cotisation adhérent', cotisationAdherent),
+    if (police.isNotEmpty) MapEntry('Police', police),
+  ];
 }
 
 class Beneficiaire {
@@ -211,10 +211,9 @@ class Beneficiaire {
     required this.nom,
     required this.prenom,
     required this.nomComplet,
-    required this.relation,
     required this.dateNaissance,
-    required this.telephone,
-    required this.statut,
+    required this.cellulairebene,
+    required this.statutbene,
     required this.raw,
   });
 
@@ -223,10 +222,9 @@ class Beneficiaire {
   final String nom;
   final String prenom;
   final String nomComplet;
-  final String relation;
   final String dateNaissance;
-  final String telephone;
-  final String statut;
+  final String cellulairebene;
+  final String statutbene;
   final Map<String, dynamic> raw;
 
   factory Beneficiaire.fromJson(Map<String, dynamic> json) {
@@ -255,7 +253,8 @@ class Beneficiaire {
     ]);
 
     return Beneficiaire(
-      id: _pickString(json, const [
+      id:
+          _pickString(json, const [
             'idbeneficiaire',
             'id_beneficiaire',
             'idbenef',
@@ -263,7 +262,8 @@ class Beneficiaire {
             'idadherent',
           ]) ??
           '',
-      code: _pickString(json, const [
+      code:
+          _pickString(json, const [
             'codebeneficiaire',
             'code_beneficiaire',
             'codebene',
@@ -273,16 +273,8 @@ class Beneficiaire {
       nom: lastName ?? '',
       prenom: firstName ?? '',
       nomComplet: _concatName(fullName, firstName, lastName),
-      relation: _pickString(json, const [
-            'lien',
-            'lienparente',
-            'relation',
-            'qualite',
-            'typebeneficiaire',
-            'role',
-          ]) ??
-          '',
-      dateNaissance: _pickString(json, const [
+      dateNaissance:
+          _pickString(json, const [
             'datenaissance',
             'date_naissance',
             'dob',
@@ -291,21 +283,18 @@ class Beneficiaire {
             'datenaiss_bene',
           ]) ??
           '',
-      telephone: _pickString(json, const [
-            'telephone',
-            'tel',
-            'portable',
+      cellulairebene:
+          _pickString(json, const [
+            'cellulairebene',
+            'cellulaire',
+            'cellulair_benefiniciaire',
             'gsm',
             'contact',
             'telbeneficiaire',
           ]) ??
           '',
-      statut: _pickString(json, const [
-            'statut',
-            'status',
-            'etat',
-          ]) ??
-          '',
+      statutbene:
+          _pickString(json, const ['statutbene', 'status', 'etat']) ?? '',
       raw: Map<String, dynamic>.from(json),
     );
   }
@@ -343,5 +332,3 @@ String? _pickString(Map<String, dynamic> json, List<String> keys) {
   }
   return null;
 }
-
-
