@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myagemas/Page%20connexion/RenitialiserMDP.dart';
+import 'package:myagemas/Pages/home/Home.dart';
 import 'package:myagemas/Pages/home/widgets/Carre.dart';
 import 'package:myagemas/Pages/home/widgets/Input.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Connexion extends StatefulWidget {
   const Connexion({super.key});
@@ -47,7 +50,14 @@ class _ConnexionState extends State<Connexion> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                            },
                             child: Text("Se connecter"),
                           ),
                         ),
@@ -68,9 +78,31 @@ class _ConnexionState extends State<Connexion> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Carre(chemin: 'assets/images/Facebook.png'),
+                            Carre(
+                              chemin: 'assets/images/Facebook.png',
+                              onTap: () async {
+                                final url = Uri.parse(
+                                  "https://www.facebook.com/share/171Mcd8BCb/?mibextid=wwXIfr",
+                                );
+                                await launchUrl(
+                                  url,
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              },
+                            ),
                             SizedBox(width: 10),
-                            Carre(chemin: 'assets/images/tiktok.png'),
+                            Carre(
+                              chemin: 'assets/images/tiktok.png',
+                              onTap: () async {
+                                final url = Uri.parse(
+                                  "https://www.tiktok.com/@agemas.assurance?_t=ZM-8xHHerJZ8rN&_r=1",
+                                );
+                                await launchUrl(
+                                  url,
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              },
+                            ),
                           ],
                         ),
                         SizedBox(height: 5),
@@ -80,7 +112,14 @@ class _ConnexionState extends State<Connexion> {
                           children: [
                             Text("Mot de passe oublié?"),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Renitialisermdp(),
+                                  ),
+                                );
+                              },
                               child: Text(
                                 "Réinitialisez",
                                 style: TextStyle(

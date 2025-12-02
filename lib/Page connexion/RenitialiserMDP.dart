@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myagemas/Pages/home/widgets/Carre.dart';
 import 'package:myagemas/Pages/home/widgets/Input.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Renitialisermdp extends StatefulWidget {
   const Renitialisermdp({super.key});
@@ -74,9 +75,31 @@ class _RenitialisermdpState extends State<Renitialisermdp> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Carre(chemin: 'assets/images/Facebook.png'),
+                            Carre(
+                              chemin: 'assets/images/Facebook.png',
+                              onTap: () async {
+                                final url = Uri.parse(
+                                  "https://www.facebook.com/share/171Mcd8BCb/?mibextid=wwXIfr",
+                                );
+                                await launchUrl(
+                                  url,
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              },
+                            ),
                             SizedBox(width: 10),
-                            Carre(chemin: 'assets/images/tiktok.png'),
+                            Carre(
+                              chemin: 'assets/images/tiktok.png',
+                              onTap: () async {
+                                final url = Uri.parse(
+                                  "https://www.tiktok.com/@agemas.assurance?_t=ZM-8xHHerJZ8rN&_r=1",
+                                );
+                                await launchUrl(
+                                  url,
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              },
+                            ),
                           ],
                         ),
                         SizedBox(height: 5),
