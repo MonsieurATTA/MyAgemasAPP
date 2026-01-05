@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myagemas/Page%20connexion/connexion.dart';
+import 'package:myagemas/Page%20connexion/VerifieMecano.dart';
 /* import 'package:myagemas/Pages/home/Home.dart'; */
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'MyAGEMAS',
       debugShowCheckedModeBanner: false,
       /* home: HomePage(), */
-      home: Connexion(),
+      home: Verifiemecano(),
     );
   }
 }

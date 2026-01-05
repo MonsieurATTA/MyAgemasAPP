@@ -39,6 +39,7 @@ dependencies:
   readmore: ^3.0.0
   http: ^0.13.6   # ou la dernière version 
   url_launcher: ^6.3.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

@@ -12,7 +12,7 @@ class PageadherentMOKA extends StatefulWidget {
 }
 
 class _PageadherentMOKAState extends State<PageadherentMOKA> {
-  late final String _clientId = defaultMokaClientId.trim();
+  String _clientId = '';
   bool _isLoading = false;
   String? _errorMessage;
   List<Adherent> _adherents = <Adherent>[];
@@ -25,6 +25,14 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
   @override
   void initState() {
     super.initState();
+    _initializeClientId();
+  }
+
+  Future<void> _initializeClientId() async {
+    final clientId = await getDefaultMokaClientId();
+    setState(() {
+      _clientId = clientId.trim();
+    });
     _loadAdherents();
   }
 

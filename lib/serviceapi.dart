@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'client_data.dart';
 import 'commune.dart';
 import 'moka_models.dart';
 import 'pharmacie.dart';
@@ -181,9 +182,7 @@ Future<List<T>> _fetchMokaList<T>(
     final list = _normalizeDecoded(decoded);
     return list
         .where((e) => e is Map)
-        .map(
-          (e) => mapper(Map<String, dynamic>.from(e as Map)),
-        )
+        .map((e) => mapper(Map<String, dynamic>.from(e as Map)))
         .toList();
   } finally {
     httpClient.close(force: true);
@@ -206,6 +205,157 @@ List<dynamic> _normalizeDecoded(dynamic decoded) {
     return [decoded];
   }
   return <dynamic>[];
+}
+
+// Fonction helper pour les requêtes POST
+Future<dynamic> _postMokaRequest(Uri uri, Map<String, dynamic> body) async {
+  final httpClient = HttpClient();
+  try {
+    final request = await httpClient.postUrl(uri);
+    request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
+    request.headers.set(HttpHeaders.acceptHeader, 'application/json');
+
+    // Encoder et écrire le JSON
+    final jsonString = jsonEncode(body);
+    request.write(jsonString);
+
+    final response = await request.close();
+    final responseBody = await utf8.decoder.bind(response).join();
+
+    if (response.statusCode != 200) {
+      throw HttpException('Status ${response.statusCode}: $responseBody');
+    }
+
+    return jsonDecode(responseBody);
+  } finally {
+    httpClient.close(force: true);
+  }
+}
+
+// Fonction helper pour les requêtes PUT
+Future<dynamic> _putMokaRequest(Uri uri, Map<String, dynamic> body) async {
+  final httpClient = HttpClient();
+  try {
+    final request = await httpClient.openUrl('PUT', uri);
+    request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
+    request.headers.set(HttpHeaders.acceptHeader, 'application/json');
+
+    // Encoder et écrire le JSON
+    final jsonString = jsonEncode(body);
+    request.write(jsonString);
+
+    final response = await request.close();
+    final responseBody = await utf8.decoder.bind(response).join();
+
+    if (response.statusCode != 200) {
+      throw HttpException('Status ${response.statusCode}: $responseBody');
+    }
+
+    return jsonDecode(responseBody);
+  } finally {
+    httpClient.close(force: true);
+  }
+}
+
+/// Vérifie si c'est la première connexion du client
+/// Retourne 0 si client n'existe pas, 1 si première connexion, 2 si déjà connecté
+Future<int> verifierPremiereConnexion(String numero) async {
+  final trimmed = numero.trim();
+  if (trimmed.isEmpty) {
+    throw ArgumentError('Le numéro ne peut pas être vide');
+  }
+
+  final uri = Uri.parse('$_baseUrl/verifie/premiere/connexion/client');
+  final body = {'numero_police_matricule_mecano_cellulaire': trimmed};
+
+  final response = await _postMokaRequest(uri, body);
+
+  // La réponse peut être un nombre ou un objet avec le nombre
+  if (response is int) {
+    return response;
+  } else if (response is Map && response['response'] != null) {
+    return response['response'] is int
+        ? response['response'] as int
+        : int.tryParse(response['response'].toString()) ?? 0;
+  } else if (response is num) {
+    return response.toInt();
+  }
+
+  return int.tryParse(response.toString()) ?? 0;
+}
+
+/// Crée un mot de passe pour un client lors de sa première connexion
+/// Retourne 1 si succès, 0 si client non trouvé
+Future<int> creerMotDePasse(String numero, String motDePasse) async {
+  final trimmedNumero = numero.trim();
+  final trimmedPassword = motDePasse.trim();
+
+  if (trimmedNumero.isEmpty) {
+    throw ArgumentError('Le numéro ne peut pas être vide');
+  }
+  if (trimmedPassword.isEmpty) {
+    throw ArgumentError('Le mot de passe ne peut pas être vide');
+  }
+
+  final uri = Uri.parse('$_baseUrl/creation/motdepasse/client');
+  final body = {
+    'numero_cellulaire': trimmedNumero,
+    'mot_de_passe': trimmedPassword,
+  };
+
+  final response = await _putMokaRequest(uri, body);
+
+  // La réponse peut être un nombre ou un objet avec le nombre
+  if (response is int) {
+    return response;
+  } else if (response is Map && response['response'] != null) {
+    return response['response'] is int
+        ? response['response'] as int
+        : int.tryParse(response['response'].toString()) ?? 0;
+  } else if (response is num) {
+    return response.toInt();
+  }
+
+  return int.tryParse(response.toString()) ?? 0;
+}
+
+/// Connecte un client avec son numéro et mot de passe
+/// Retourne ClientData si succès, null si échec (réponse 0)
+Future<ClientData?> connexionClient(String numero, String motDePasse) async {
+  final trimmedNumero = numero.trim();
+  final trimmedPassword = motDePasse.trim();
+
+  if (trimmedNumero.isEmpty) {
+    throw ArgumentError('Le numéro ne peut pas être vide');
+  }
+  if (trimmedPassword.isEmpty) {
+    throw ArgumentError('Le mot de passe ne peut pas être vide');
+  }
+
+  final uri = Uri.parse('$_baseUrl/connexion/client');
+  final body = {
+    'numero_police_matricule_mecano_cellulaire': trimmedNumero,
+    'mot_de_passe': trimmedPassword,
+  };
+
+  final response = await _postMokaRequest(uri, body);
+
+  // Si la réponse est 0, la connexion a échoué
+  if (response == 0 || (response is Map && response['response'] == 0)) {
+    return null;
+  }
+
+  // Si c'est un objet Map, on crée un ClientData
+  if (response is Map<String, dynamic>) {
+    return ClientData.fromJson(response);
+  }
+
+  // Si c'est un objet avec des données client
+  if (response is Map && response.containsKey('IDCclient_agemas')) {
+    return ClientData.fromJson(Map<String, dynamic>.from(response));
+  }
+
+  return null;
 }
 
 /* import 'dart:convert';
