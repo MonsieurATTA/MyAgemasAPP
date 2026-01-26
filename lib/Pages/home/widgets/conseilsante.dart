@@ -30,7 +30,7 @@ class Conseilsante extends StatelessWidget {
                           Text(
                             sante.name,
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

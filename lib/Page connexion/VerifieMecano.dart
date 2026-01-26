@@ -62,15 +62,15 @@ class _VerifieMecanoState extends State<Verifiemecano> {
         );
       } else if (statut == 2) {
         // Déjà connecté - rediriger vers la vérification du mot de passe
-        setState(() {
-          _isLoading = false;
-        });
+          setState(() {
+            _isLoading = false;
+          });
         Navigator.push(
-          context,
+            context,
           MaterialPageRoute(
             builder: (context) => Verifiemotdepass(numero: numero, isFirstConnection: false),
           ),
-        );
+          );
       }
     } catch (e) {
       if (!mounted) return;
@@ -141,7 +141,7 @@ class _VerifieMecanoState extends State<Verifiemecano> {
 
                         SizedBox(
                           width: double.infinity,
-                            child: ElevatedButton(
+                          child: ElevatedButton(
                             onPressed: _isLoading ? null : _verifierMecano,
                             child: _isLoading
                                 ? SizedBox(

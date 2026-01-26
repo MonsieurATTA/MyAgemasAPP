@@ -208,25 +208,68 @@ List<dynamic> _normalizeDecoded(dynamic decoded) {
 }
 
 // Fonction helper pour les requêtes POST
-Future<dynamic> _postMokaRequest(Uri uri, Map<String, dynamic> body) async {
+/* Future<dynamic> _postMokaRequest(Uri uri, Map<String, dynamic> body) async {
   final httpClient = HttpClient();
   try {
     final request = await httpClient.postUrl(uri);
-    request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
+    request.headers.set(
+      HttpHeaders.contentTypeHeader,
+      'application/x-www-form-urlencoded',
+    );
     request.headers.set(HttpHeaders.acceptHeader, 'application/json');
 
-    // Encoder et écrire le JSON
-    final jsonString = jsonEncode(body);
-    request.write(jsonString);
+    // Encoder les paramètres comme form-urlencoded
+    final params = body.entries
+        .map(
+          (e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}',
+        )
+        .join('&');
+    request.write(params);
 
     final response = await request.close();
     final responseBody = await utf8.decoder.bind(response).join();
 
-    if (response.statusCode != 200) {
+    /* if (response.statusCode != 200) {
       throw HttpException('Status ${response.statusCode}: $responseBody');
-    }
+    } */
 
     return jsonDecode(responseBody);
+  } finally {
+    httpClient.close(force: true);
+  }
+} */
+
+Future<dynamic> _postMokaRequest(Uri uri, Map<String, dynamic> body) async {
+  final httpClient = HttpClient()
+    ..connectionTimeout = const Duration(seconds: 10);
+
+  try {
+    final request = await httpClient.postUrl(uri);
+
+    final jsonBody = jsonEncode(body);
+    final bytes = utf8.encode(jsonBody);
+
+    request.headers.set(
+      HttpHeaders.contentTypeHeader,
+      'application/json; charset=utf-8',
+    );
+    request.headers.set(HttpHeaders.acceptHeader, 'application/json');
+
+    request.contentLength = bytes.length; // 🔥 évite le chunked
+    request.add(bytes);
+
+    final response = await request.close();
+    final responseBody = await utf8.decoder.bind(response).join();
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw HttpException(
+        'Erreur ${response.statusCode}: $responseBody',
+        uri: uri,
+      );
+    }
+
+    return responseBody.isEmpty ? null : jsonDecode(responseBody);
   } finally {
     httpClient.close(force: true);
   }
@@ -237,12 +280,20 @@ Future<dynamic> _putMokaRequest(Uri uri, Map<String, dynamic> body) async {
   final httpClient = HttpClient();
   try {
     final request = await httpClient.openUrl('PUT', uri);
-    request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
+    request.headers.set(
+      HttpHeaders.contentTypeHeader,
+      'application/x-www-form-urlencoded',
+    );
     request.headers.set(HttpHeaders.acceptHeader, 'application/json');
 
-    // Encoder et écrire le JSON
-    final jsonString = jsonEncode(body);
-    request.write(jsonString);
+    // Encoder les paramètres comme form-urlencoded
+    final params = body.entries
+        .map(
+          (e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}',
+        )
+        .join('&');
+    request.write(params);
 
     final response = await request.close();
     final responseBody = await utf8.decoder.bind(response).join();

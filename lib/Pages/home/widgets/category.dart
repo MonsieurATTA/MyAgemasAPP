@@ -46,7 +46,7 @@ class Category extends StatelessWidget {
   // L'arrièere-plan de la section catégorie en blanc avec des coins arrondis en haut
   Widget build(BuildContext context) {
     return Container(
-      height: 1000,
+      height: 1050,
       decoration: const BoxDecoration(
         color: Color(0xFFF6F8FF),
         borderRadius: BorderRadius.only(
@@ -59,11 +59,22 @@ class Category extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: const Text(
+              'Retrouvez vos assurances',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                height: 3,
+              ),
+            ),
+          ),
+          Container(
             height: 140,
             /* color: Colors.blueGrey, */
             child: ListView.separated(
               padding: EdgeInsets.symmetric(
-                horizontal: 25,
+                horizontal: 20,
               ), // Especment à gauche à droite
               scrollDirection: Axis.horizontal,
               itemBuilder: ((context, index) {

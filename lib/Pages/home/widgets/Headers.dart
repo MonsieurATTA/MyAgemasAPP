@@ -35,7 +35,7 @@ class HeaderSection extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                'Monsieur Fanez chez AGEMAS',
+                'Chez AGEMAS ASSURANCE',
                 style: TextStyle(fontSize: 19, color: Colors.white),
               ),
             ],

@@ -187,7 +187,7 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
                             Text(
                               adherent.numeroContrat.isNotEmpty
                                   ? 'Contrat ${adherent.numeroContrat}'
-                                  : 'ID: ${adherent.id.isEmpty ? 'non renseigné' : adherent.id}',
+                                  : '',
                             ),
                           ],
                         ),
@@ -434,15 +434,15 @@ class _ClientHeader extends StatelessWidget {
               children: [
                 Text('Client Moka', style: theme.textTheme.titleMedium),
                 const SizedBox(height: 4),
-                Text(
+                /* Text(
                   clientId.isEmpty
                       ? 'Aucun identifiant défini'
                       : 'ID utilisé : $clientId',
                   style: theme.textTheme.bodyMedium,
-                ),
+                ), */
                 const SizedBox(height: 4),
                 Text(
-                  "Modifiez `defaultMokaClientId` pour changer d'identifiant.",
+                  "Désormais vous pouvez ajouter 8 bénéficiaires",
                   style: theme.textTheme.bodySmall,
                 ),
               ],

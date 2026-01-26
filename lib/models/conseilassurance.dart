@@ -47,6 +47,54 @@ class ConseilAssurance {
             'AGEMAS a plus de 400 pharmacie conventionnée sur tout le teritoire ivoirien.',
         images: ['assets/images/guard.png', 'assets/images/guard.png'],
       ),
+      ConseilAssurance(
+        bgImage: 'assets/images/guard.png',
+        icon: 'assets/icons/guard.png',
+        name: 'Evitez le stresse au quotidien',
+        type: 'Vie',
+        score: 1,
+        download: 15000,
+        review: 1200,
+        description:
+            'AGEMAS a plus de 400 pharmacie conventionnée sur tout le teritoire ivoirien.',
+        images: ['assets/images/guard.png', 'assets/images/guard.png'],
+      ),
+      ConseilAssurance(
+        bgImage: 'assets/images/guard.png',
+        icon: 'assets/icons/guard.png',
+        name: 'Manger de façon consciente',
+        type: 'Vie',
+        score: 4.5,
+        download: 15000,
+        review: 1200,
+        description:
+            'AGEMAS a plus de 400 pharmacie conventionnée sur tout le teritoire ivoirien.',
+        images: ['assets/images/guard.png', 'assets/images/guard.png'],
+      ),
+      ConseilAssurance(
+        bgImage: 'assets/images/guard.png',
+        icon: 'assets/icons/guard.png',
+        name: 'Faites de l\'exercice physique',
+        type: 'Vie',
+        score: 4.5,
+        download: 15000,
+        review: 1200,
+        description:
+            'AGEMAS a plus de 400 pharmacie conventionnée sur tout le teritoire ivoirien.',
+        images: ['assets/images/guard.png', 'assets/images/guard.png'],
+      ),
+      ConseilAssurance(
+        bgImage: 'assets/images/guard.png',
+        icon: 'assets/icons/guard.png',
+        name: 'Fumer tue',
+        type: 'Vie',
+        score: 4.5,
+        download: 15000,
+        review: 1200,
+        description:
+            'AGEMAS a plus de 400 pharmacie conventionnée sur tout le teritoire ivoirien.',
+        images: ['assets/images/health.png', 'assets/images/health.png'],
+      ),
     ];
   }
 }

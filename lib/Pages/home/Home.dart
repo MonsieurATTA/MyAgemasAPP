@@ -1,23 +1,29 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:myagemas/Pages/detail/PageInfo.dart';
+
 import 'package:myagemas/Pages/home/widgets/Headers.dart';
 import 'package:myagemas/Pages/home/widgets/category.dart';
 import 'package:myagemas/Pages/home/widgets/recherche.dart';
 
-//A LIRE
-//OBJECTIF DE LA PAGE : La page global d'écran où j'appelle le header.dart(profil), recherche.dart(barre de recherche), category.dart(adhrt, benef, pharmacie, conseilsante)
-
-// Page d'accueil de l'application
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  // Construction de l'interface utilisateur
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 155, 209),
       body: Stack(
         children: [
-          // 🔹 Image de fond
+          /// Image de fond
           Image.asset(
             'assets/images/icon.png',
             width: double.infinity,
@@ -25,17 +31,14 @@ class HomePage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
 
-          // 🔹 Effet flou
+          /// Effet flou
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8), // ajuste le flou
-            child: Container(
-              color: Colors.white.withOpacity(0.2), // léger voile blanc
-            ),
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+            child: Container(color: Colors.white.withOpacity(0.2)),
           ),
 
-          // 🔹 Ton contenu au-dessus
+          /// Contenu principal
           SingleChildScrollView(
-            // Permet le défilement si le contenu dépasse l'écran
             child: Stack(
               children: [
                 Transform(
@@ -58,85 +61,77 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(),
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 
-  /* La barre de navigation en bas */
-  Widget NavigationBar() {
+  /// ===============================
+  /// BOTTOM NAVIGATION BAR
+  /// ===============================
+  Widget _bottomNavigationBar() {
     return Container(
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: const Color.fromARGB(255, 169, 205, 235),
-              spreadRadius: 5,
-              blurRadius: 10,
+      decoration: const BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(255, 169, 205, 235),
+            spreadRadius: 5,
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+
+            /// ACCUEIL
+            if (index == 0) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (route) => false,
+              );
+            }
+
+            /// INFO
+            if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const info()),
+              );
+            }
+
+            /// DÉCONNEXION (FERMETURE APP)
+            if (index == 2) {
+              SystemNavigator.pop();
+            }
+          },
+
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Accueil',
+              icon: Icon(Icons.home_rounded),
+            ),
+            BottomNavigationBarItem(
+              label: 'Info',
+              icon: Icon(Icons.info_rounded),
+            ),
+            BottomNavigationBarItem(
+              label: 'Déconnexion',
+              icon: Icon(Icons.power_settings_new_rounded),
             ),
           ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          child: BottomNavigationBar(
-            selectedItemColor: Colors.blue,
-            selectedFontSize: 12,
-            unselectedFontSize: 12,
-            unselectedItemColor: Colors.grey,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                label: 'Accueil',
-                icon: Container(
-                  margin: const EdgeInsets.all(5),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.home_rounded,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              BottomNavigationBarItem(
-                label: 'Info',
-                icon: Container(
-                  margin: const EdgeInsets.all(5),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.info_rounded,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              BottomNavigationBarItem(
-                label: 'Déconnexion',
-                icon: Container(
-                  margin: const EdgeInsets.all(5),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.person_2_rounded,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
