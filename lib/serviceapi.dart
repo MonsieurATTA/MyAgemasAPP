@@ -280,20 +280,18 @@ Future<dynamic> _putMokaRequest(Uri uri, Map<String, dynamic> body) async {
   final httpClient = HttpClient();
   try {
     final request = await httpClient.openUrl('PUT', uri);
+
+    final jsonBody = jsonEncode(body);
+    final bytes = utf8.encode(jsonBody);
+
     request.headers.set(
       HttpHeaders.contentTypeHeader,
-      'application/x-www-form-urlencoded',
+      'application/json; charset=UTF-8',
     );
     request.headers.set(HttpHeaders.acceptHeader, 'application/json');
+    request.headers.set(HttpHeaders.contentLengthHeader, bytes.length);
 
-    // Encoder les paramètres comme form-urlencoded
-    final params = body.entries
-        .map(
-          (e) =>
-              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}',
-        )
-        .join('&');
-    request.write(params);
+    request.add(bytes);
 
     final response = await request.close();
     final responseBody = await utf8.decoder.bind(response).join();

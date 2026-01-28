@@ -6,81 +6,119 @@ class info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("À propos"), centerTitle: true),
+      appBar: AppBar(
+        title: const Text("À propos de nous"),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 33, 170, 243),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // =========================
-            // ZONE IMAGE / LOGO
-            // =========================
-            Container(
-              height: 180,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const Center(
-                child: Text(
-                  "Image / Logo ici",
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // =========================
-            // ZONE NOUVEAUTÉS
-            // =========================
-            _section(
-              title: "Nouveautés",
-              child: _emptyBox(
-                "Du nouveau à AGEMAS ASSURANCE, désormais profiter de MOKA PLUS",
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // =========================
-            // ZONE INFORMATIONS
-            // =========================
-            _section(
-              title: "Informations",
-              child: _emptyBox(
-                "Nous accompagnons : les Particuliers, Entreprises et Groupements professionnels,Fonctionnaires et Agents de l'Etat, Salariés d'Entreprises Privées, Groupements Communautaires et Mutuelles.",
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // =========================
-            // ZONE CONTACT
-            // =========================
-            _section(
-              title: "Contact",
+            /// 🔹 Logo ou image de l'entreprise
+            Center(
               child: Column(
                 children: [
-                  _emptyBox("+225 27 22 31 74 59; +225 01 03 64 49 42 "),
-                  const SizedBox(height: 8),
-                  _emptyBox("contact@agemas-ci.com"),
-                  const SizedBox(height: 8),
-                  _emptyBox(
-                    "Siège social : Abidjan-Cocody II plateaix - Vallon, Cité Lémania 2eme entrée, 2eme villa à droite",
+                  CircleAvatar(
+                    radius: 80,
+                    backgroundColor: Colors.transparent,
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/agemas-01.png',
+                        width: 150,
+                        height: 100,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 0),
+                  const Text(
+                    "AGEMAS ASSURANCE",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 25),
 
-            // =========================
-            // ZONE SITE INTERNET
-            // =========================
-            _section(
-              title: "Site Internet",
-              child: _emptyBox("https://agemas-ci.com/"),
+            /// 🔹 Description
+            const Text(
+              "Qui sommes-nous ?",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              "AGEMAS Assurance est une société de courtage en assurance de droit ivoirien,créée en 1997."
+              "Depuis plus de 25ans, nous mettons notre expertise au service de la protection sociale et patrimoniale avec un engagement constant en vers les attentes concrètes des populations."
+              "Grâce à une présence nationale à travers nos agences à Abidjan, Bouaké, Daloa, Korhogo, Kotobi et San Pedro, nous offrons un service de proximité ouvert à toutesles catégories de la société.",
+              style: TextStyle(fontSize: 15, height: 1.5),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// 🔹 Mission
+            const Text(
+              "Notre mission",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              "Rendre l'assurance simple, accessible et utile à tous."
+              "Concevoir des produits adaptés aux besoins réels des populations, dans un esprit de solidarité et d'inclusion sociale. ",
+
+              style: TextStyle(fontSize: 15, height: 1.5),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// 🔹 Valeurs
+            const Text(
+              "Nos valeurs",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            _buildValueItem("✔ Professionnalisme"),
+            _buildValueItem("✔ Transparence"),
+            _buildValueItem("✔ Innovation"),
+            _buildValueItem("✔ Engagement"),
+
+            const SizedBox(height: 25),
+
+            /// 🔹 Contact
+            const Text(
+              "Contact",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              leading: const Icon(Icons.phone, color: Colors.blue),
+              title: const Text("+225 27 22 31 74 59"),
+            ),
+            ListTile(
+              leading: const Icon(Icons.phone, color: Colors.blue),
+              title: const Text("+225 01 03 64 49 42"),
+            ),
+            ListTile(
+              leading: const Icon(Icons.email, color: Colors.blue),
+              title: const Text("contact@agemas-ci.com"),
+            ),
+            ListTile(
+              leading: const Icon(Icons.location_on, color: Colors.blue),
+              title: const Text(
+                "Abidjan-Cocody II Plateaux Vallon, Cité Lémania 2ème entrée",
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            /// 🔹 Footer
+            Center(
+              child: Text(
+                "© 2026 - AGEMAS ASSURANCE",
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+              ),
             ),
           ],
         ),
@@ -88,45 +126,11 @@ class info extends StatelessWidget {
     );
   }
 
-  // =========================
-  // WIDGET SECTION (TITRE + CONTENU)
-  // =========================
-  Widget _section({required String title, required Widget child}) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          child,
-        ],
-      ),
-    );
-  }
-
-  // =========================
-  // ZONE VIDE MODIFIABLE
-  // =========================
-  Widget _emptyBox(String placeholder) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(placeholder, style: const TextStyle(color: Colors.grey)),
+  /// Widget pour les valeurs
+  static Widget _buildValueItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Text(text, style: const TextStyle(fontSize: 15)),
     );
   }
 }

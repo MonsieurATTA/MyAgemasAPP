@@ -3,7 +3,7 @@ import 'package:myagemas/Pages/detail/pageautomoto.dart';
 import 'package:myagemas/Pages/detail/pagefamssur.dart';
 import 'package:myagemas/Pages/detail/pagemrh.dart';
 import 'package:myagemas/Pages/detail/pagesante.dart';
-import 'package:myagemas/Pages/home/widgets/Produits.dart';
+import 'package:myagemas/Pages/home/widgets/btnpharmacie.dart';
 import 'package:myagemas/Pages/home/widgets/conseilsante.dart';
 import 'package:myagemas/Pages/detail/pagmoka.dart';
 /* import 'package:myagemas/Pages/home/widgets/Produits.dart'; */
@@ -11,13 +11,22 @@ import 'package:myagemas/Pages/detail/pagmoka.dart';
 //A LIRE
 // LA page (Blanche) où j'appelle deux sous page "produit.dart","Conseilsante.dart" et j'affiche toues les inforamations sur les contrats d'assuarance
 
+// ⚠️ Assure-toi que ces pages existent bien
+// import 'page_adherent_moka.dart';
+// import 'page_auto_moto.dart';
+// import 'page_sante.dart';
+// import 'page_famssur.dart';
+// import 'page_mrh.dart';
+// import 'produits.dart';
+// import 'conseilsante.dart';
+
 class Category extends StatelessWidget {
   Category({super.key});
 
-  final categories = [
+  final List<Map<String, dynamic>> categories = [
     {
       'icon': Icons.person_4_outlined,
-      'label': 'Moka',
+      'label': 'Moka pharmacie',
       'color': Color.fromARGB(255, 11, 54, 230),
     },
     {
@@ -42,11 +51,14 @@ class Category extends StatelessWidget {
     },
   ];
 
+  // Espacements standards
+  static const double sectionSpacing = 24;
+  static const double titleSpacing = 12;
+
   @override
-  // L'arrièere-plan de la section catégorie en blanc avec des coins arrondis en haut
   Widget build(BuildContext context) {
     return Container(
-      height: 1050,
+      height: 1090,
       decoration: const BoxDecoration(
         color: Color(0xFFF6F8FF),
         borderRadius: BorderRadius.only(
@@ -54,115 +66,129 @@ class Category extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      // Le contenu de la section catégorie
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: const Text(
-              'Retrouvez vos assurances',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                height: 3,
-              ),
+          // ================= VOS ASSURANCES =================
+          const SizedBox(height: sectionSpacing),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'VOS ASSURANCES',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
+
+          const SizedBox(height: titleSpacing),
+
+          SizedBox(
             height: 140,
-            /* color: Colors.blueGrey, */
             child: ListView.separated(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-              ), // Especment à gauche à droite
               scrollDirection: Axis.horizontal,
-              itemBuilder: ((context, index) {
-                final String label = categories[index]['label'] as String;
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemCount: categories.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 24),
+              itemBuilder: (context, index) {
+                final category = categories[index];
+                final String label = category['label'];
+
                 return InkWell(
                   borderRadius: BorderRadius.circular(15),
                   onTap: () {
-                    if (label == 'Moka') {
-                      Navigator.of(context).push(
+                    if (label == 'Moka pharmacie') {
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(
                           builder: (_) => const PageadherentMOKA(),
                         ),
                       );
                     } else if (label == 'Auto-Moto') {
-                      Navigator.of(context).push(
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(builder: (_) => const PageAutoMoto()),
                       );
                     } else if (label == 'Sante') {
-                      Navigator.of(context).push(
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(builder: (_) => const PageSante()),
                       );
                     } else if (label == 'Famssur') {
-                      Navigator.of(context).push(
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(builder: (_) => const PageFamssur()),
                       );
                     } else if (label == 'MRH') {
-                      Navigator.of(context).push(
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(builder: (_) => const PageMRH()),
                       );
                     }
                   },
                   child: Column(
                     children: [
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 16),
+
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
+                          color: category['color'],
                           borderRadius: BorderRadius.circular(15),
-                          color: categories[index]['color'] as Color,
                         ),
                         child: Icon(
-                          categories[index]['icon'] as IconData,
-                          color: Colors.white,
+                          category['icon'],
                           size: 40,
+                          color: Colors.white,
                         ),
                       ),
+
                       const SizedBox(height: 10),
+
                       Text(
                         label,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                        style: const TextStyle(
                           fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
                 );
-              }),
-              separatorBuilder: ((context, index) => const SizedBox(width: 33)),
-              itemCount: categories.length,
+              },
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const Text(
-              'retrouvez les pharmacies',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                height: 3,
-              ),
+
+          // ================= PHARMACIES =================
+          const SizedBox(height: sectionSpacing),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'NOS PHARMACIES PARTENAIRES',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
+
+          const SizedBox(height: titleSpacing),
+
           Produits(),
 
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const Text(
-              'Conseils santé',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                height: 3,
-              ),
+          // ================= CONSEILS SANTÉ =================
+          const SizedBox(height: sectionSpacing),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: Text(
+              'CONSEILS SANTE',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
+
+          const SizedBox(height: titleSpacing),
+
           Conseilsante(),
+
+          const SizedBox(height: 30),
         ],
       ),
     );

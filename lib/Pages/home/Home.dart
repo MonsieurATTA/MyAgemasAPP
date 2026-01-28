@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:myagemas/Pages/detail/PageInfo.dart';
 
 import 'package:myagemas/Pages/home/widgets/Headers.dart';
-import 'package:myagemas/Pages/home/widgets/category.dart';
+import 'package:myagemas/Pages/home/widgets/produitssurance.dart';
 import 'package:myagemas/Pages/home/widgets/recherche.dart';
 
 class HomePage extends StatefulWidget {

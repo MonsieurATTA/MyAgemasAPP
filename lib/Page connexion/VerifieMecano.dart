@@ -62,15 +62,16 @@ class _VerifieMecanoState extends State<Verifiemecano> {
         );
       } else if (statut == 2) {
         // Déjà connecté - rediriger vers la vérification du mot de passe
-          setState(() {
-            _isLoading = false;
-          });
+        setState(() {
+          _isLoading = false;
+        });
         Navigator.push(
-            context,
+          context,
           MaterialPageRoute(
-            builder: (context) => Verifiemotdepass(numero: numero, isFirstConnection: false),
+            builder: (context) =>
+                Verifiemotdepass(numero: numero, isFirstConnection: false),
           ),
-          );
+        );
       }
     } catch (e) {
       if (!mounted) return;
@@ -84,156 +85,178 @@ class _VerifieMecanoState extends State<Verifiemecano> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.only(top: 30),
-            margin: EdgeInsets.all(10),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Connexion",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text("Bienvenue sur votre application MY-AGEMAS"),
+      body: Stack(
+        children: [
+          /// 🔹 Image de fond
+          Positioned.fill(
+            child: Image.asset('assets/images/icon.png', fit: BoxFit.fill),
+          ),
 
-                  SizedBox(height: 25),
+          /// 🔹 Overlay sombre (lisibilité)
+          Positioned.fill(
+            child: Container(color: Colors.black.withOpacity(0.3)),
+          ),
 
-                  SizedBox(height: 30),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Input(
-                          label: "Matricule/Mecano/Téléphone",
-                          indication: "Matricule/Mecano/Téléphone",
-                          controller: _numeroController,
-                        ),
-                        if (_errorMessage != null) ...[
-                          SizedBox(height: 15),
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.red.shade50,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.red.shade300),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.error_outline, color: Colors.red),
-                                SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    _errorMessage!,
-                                    style: TextStyle(
-                                      color: Colors.red.shade900,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+          /// 🔹 Contenu
+          Center(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.93),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Connexion",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text("Bienvenue sur votre application MY-AGEMAS"),
+
+                    SizedBox(height: 25),
+
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Input(
+                            label: "Matricule/Mecano/Téléphone",
+                            indication: "Matricule/Mecano/Téléphone",
+                            controller: _numeroController,
                           ),
-                        ],
-                        SizedBox(height: 30),
 
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _isLoading ? null : _verifierMecano,
-                            child: _isLoading
-                                ? SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white,
+                          if (_errorMessage != null) ...[
+                            SizedBox(height: 15),
+                            Container(
+                              padding: EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.red.shade50,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.red.shade300),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.error_outline, color: Colors.red),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _errorMessage!,
+                                      style: TextStyle(
+                                        color: Colors.red.shade900,
                                       ),
                                     ),
-                                  )
-                                : Text("Vérifier"),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-
-                        Row(
-                          children: [
-                            Expanded(child: Divider(thickness: 0.5)),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text("Voir nos page avec"),
-                            ),
-                            Expanded(child: Divider(thickness: 0.5)),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Carre(
-                              chemin: 'assets/images/Facebook.png',
-                              onTap: () async {
-                                final url = Uri.parse(
-                                  "https://www.facebook.com/share/171Mcd8BCb/?mibextid=wwXIfr",
-                                );
-                                await launchUrl(
-                                  url,
-                                  mode: LaunchMode.externalApplication,
-                                );
-                              },
-                            ),
-                            SizedBox(width: 10),
-                            Carre(
-                              chemin: 'assets/images/tiktok.png',
-                              onTap: () async {
-                                final url = Uri.parse(
-                                  "https://www.tiktok.com/@agemas.assurance?_t=ZM-8xHHerJZ8rN&_r=1",
-                                );
-                                await launchUrl(
-                                  url,
-                                  mode: LaunchMode.externalApplication,
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Mot de passe oublié?"),
-                            GestureDetector(
-                              onTap: () {
-                                /* Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Renitialisermdp(),
                                   ),
-                                ); */
-                              },
-                              child: Text(
-                                "Réinitialisez",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                ],
                               ),
                             ),
                           ],
-                        ),
-                      ],
+
+                          SizedBox(height: 25),
+
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: _isLoading ? null : _verifierMecano,
+                              child: _isLoading
+                                  ? SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                              Colors.white,
+                                            ),
+                                      ),
+                                    )
+                                  : Text("Vérifier"),
+                            ),
+                          ),
+
+                          SizedBox(height: 20),
+
+                          /// 🔹 Séparateur
+                          Row(
+                            children: [
+                              Expanded(child: Divider(thickness: 0.5)),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text("Voir nos pages sur"),
+                              ),
+                              Expanded(child: Divider(thickness: 0.5)),
+                            ],
+                          ),
+
+                          SizedBox(height: 12),
+
+                          /// 🔹 Boutons réseaux sociaux
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Carre(
+                                chemin: 'assets/images/Facebook.png',
+                                onTap: () async {
+                                  final url = Uri.parse(
+                                    "https://www.facebook.com/share/1FrRTmvVPX/?mibextid=wwXIfr",
+                                  );
+                                  await launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                              ),
+                              SizedBox(width: 12),
+                              Carre(
+                                chemin: 'assets/images/tiktok.png',
+                                onTap: () async {
+                                  final url = Uri.parse(
+                                    "https://www.tiktok.com/@agemas.assurance?_t=ZM-8xHHerJZ8rN&_r=1",
+                                  );
+                                  await launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 10),
+
+                          /// 🔹 Mot de passe oublié
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Mot de passe oublié ? "),
+                              GestureDetector(
+                                onTap: () {
+                                  // TODO: navigation reset mdp
+                                },
+                                child: Text(
+                                  "Réinitialisez",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
