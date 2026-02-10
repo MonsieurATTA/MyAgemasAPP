@@ -115,7 +115,7 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adhérents Moka'),
+        title: const Text('MOKA PHARMACIE'),
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
@@ -181,13 +181,14 @@ class _PageadherentMOKAState extends State<PageadherentMOKA> {
                               adherent.nomComplet.isEmpty
                                   ? 'Adhérent ${adherent.id}'
                                   : adherent.nomComplet,
+                              /* "Adhérent principal" */
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 4),
+                            const SizedBox(height: 1),
                             Text(
                               adherent.numeroContrat.isNotEmpty
-                                  ? 'Contrat ${adherent.numeroContrat}'
-                                  : '',
+                                  ? 'Contrat ${adherent.nom}'
+                                  : '${adherent.police}',
                             ),
                           ],
                         ),

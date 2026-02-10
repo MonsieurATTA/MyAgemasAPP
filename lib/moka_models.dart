@@ -189,14 +189,15 @@ class Adherent {
   List<MapEntry<String, String>> get details => [
     if (nom.isNotEmpty) MapEntry('Nom', nom),
     if (prenom.isNotEmpty) MapEntry('Prénom', prenom),
-    if (produit.isNotEmpty) MapEntry('Produit', produit),
+    /* if (produit.isNotEmpty) MapEntry('Produit', produit), */
     if (statut.isNotEmpty) MapEntry('Statut', statut),
     if (dateEffet.isNotEmpty) MapEntry("Date d'effet", dateEffet),
     if (dateNaissance.isNotEmpty) MapEntry('Date de naissance', dateNaissance),
     if (lieuNaissance.isNotEmpty) MapEntry('Lieu de naissance', lieuNaissance),
     if (email.isNotEmpty) MapEntry('Email', email),
-    if (telephone.isNotEmpty) MapEntry('Téléphone', telephone),
-    if (cellulaire.isNotEmpty) MapEntry('Cel', cellulaire),
+    /*     if (telephone.isNotEmpty) MapEntry('Téléphone', telephone),
+ */
+    if (cellulaire.isNotEmpty) MapEntry('Téléphone', cellulaire),
     if (cumulCotise.isNotEmpty) MapEntry('Cumul cotisé', cumulCotise),
     if (cotisationAdherent.isNotEmpty)
       MapEntry('Cotisation adhérent', cotisationAdherent),

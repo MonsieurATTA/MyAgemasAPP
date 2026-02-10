@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<String> getDefaultMokaClientId() async {
   final prefs = await SharedPreferences.getInstance();
   // Valeur par défaut pour les tests si aucun ID n'est sauvegardé
-  return prefs.getString('defaultMokaClientId') ?? '12346';
+  return prefs.getString('defaultMokaClientId') ?? '';
 }
 
 /// Définit l'identifiant client Moka de manière persistante.

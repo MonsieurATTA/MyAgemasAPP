@@ -160,7 +160,6 @@ class Category extends StatelessWidget {
 
           // ================= PHARMACIES =================
           const SizedBox(height: sectionSpacing),
-
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
@@ -168,14 +167,11 @@ class Category extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-
           const SizedBox(height: titleSpacing),
-
           Produits(),
 
           // ================= CONSEILS SANTÉ =================
           const SizedBox(height: sectionSpacing),
-
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
             child: Text(
@@ -183,11 +179,8 @@ class Category extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-
           const SizedBox(height: titleSpacing),
-
           Conseilsante(),
-
           const SizedBox(height: 30),
         ],
       ),

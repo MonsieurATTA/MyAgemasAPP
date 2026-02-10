@@ -40,10 +40,19 @@ dependencies:
   http: ^0.13.6   # ou la dernière version 
   url_launcher: ^6.3.2
   shared_preferences: ^2.2.2
+  
+icons_launcher:
+  image_path: "assets/images/icon.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  icons_launcher: ^3.0.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
