@@ -4,6 +4,7 @@ class Adherent {
     required this.nom,
     required this.prenom,
     required this.nomComplet,
+    required this.lienPhoto,
     required this.numeroContrat,
     required this.produit,
     required this.statut,
@@ -23,6 +24,7 @@ class Adherent {
   final String nom;
   final String prenom;
   final String nomComplet;
+  final String lienPhoto;
   final String numeroContrat;
   final String produit;
   final String statut;
@@ -66,6 +68,16 @@ class Adherent {
       'designation',
     ]);
 
+    final lienPhoto = _pickString(json, const [
+      'lien_photo',
+      'lienphoto',
+      'lien_photo_client',
+      'photo',
+      'photo_client',
+      'url_photo',
+    ]) ??
+        '';
+
     return Adherent(
       id:
           _pickString(json, const [
@@ -81,6 +93,7 @@ class Adherent {
       nom: lastName ?? '',
       prenom: firstName ?? '',
       nomComplet: _concatName(fullName, firstName, lastName),
+      lienPhoto: lienPhoto,
       numeroContrat:
           _pickString(json, const [
             'numcontrat',

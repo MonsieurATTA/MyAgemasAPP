@@ -2,7 +2,8 @@
 class ClientData {
   final int? idCclientAgemas;
   final int? civilite; // 1-Monsieur, 2-Madame, 3-Mademoiselle
-  final int? situationMatrimoniale; // 1-Célibataire, 2-Marié(e), 3-En concubinage, 4-Divorcé(e), 5-Veuf(ve), 6-En concubinage
+  final int?
+  situationMatrimoniale; // 1-Célibataire, 2-Marié(e), 3-En concubinage, 4-Divorcé(e), 5-Veuf(ve), 6-En concubinage
   final String? nom;
   final String? prenom;
   final DateTime? datenais;
@@ -38,25 +39,25 @@ class ClientData {
     return ClientData(
       idCclientAgemas: json['IDCclient_agemas'] != null
           ? (json['IDCclient_agemas'] is int
-              ? json['IDCclient_agemas'] as int
-              : int.tryParse(json['IDCclient_agemas'].toString()))
+                ? json['IDCclient_agemas'] as int
+                : int.tryParse(json['IDCclient_agemas'].toString()))
           : null,
       civilite: json['civilite'] != null
           ? (json['civilite'] is int
-              ? json['civilite'] as int
-              : int.tryParse(json['civilite'].toString()))
+                ? json['civilite'] as int
+                : int.tryParse(json['civilite'].toString()))
           : null,
       situationMatrimoniale: json['situation_matrimoniale'] != null
           ? (json['situation_matrimoniale'] is int
-              ? json['situation_matrimoniale'] as int
-              : int.tryParse(json['situation_matrimoniale'].toString()))
+                ? json['situation_matrimoniale'] as int
+                : int.tryParse(json['situation_matrimoniale'].toString()))
           : null,
       nom: json['nom']?.toString(),
       prenom: json['prenom']?.toString(),
       datenais: json['datenais'] != null
           ? (json['datenais'] is DateTime
-              ? json['datenais'] as DateTime
-              : DateTime.tryParse(json['datenais'].toString()))
+                ? json['datenais'] as DateTime
+                : DateTime.tryParse(json['datenais'].toString()))
           : null,
       lieunais: json['lieunais']?.toString(),
       corporation: json['corporation']?.toString(),
@@ -92,4 +93,3 @@ class ClientData {
     };
   }
 }
-
