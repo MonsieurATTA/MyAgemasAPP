@@ -5,19 +5,19 @@ import 'package:myagemas/models/assurance.dart';
 //A Lire
 // OBJET DE CETTE PARTIE : C'est là où on clique pour afficher la liste des commune pour pouvoir retrouver les pharmacies
 
-class Produits extends StatelessWidget {
-  Produits({super.key});
+class boutonpharma extends StatelessWidget {
+  boutonpharma({super.key});
 
   final List<Assurance> assurances = Assurance.assurances();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 150,
       /* color: Colors.blue, */
       child: ListView.separated(
         padding: EdgeInsets.symmetric(
-          horizontal: 50,
+          horizontal: 100,
           vertical: 10,
         ), // Especment à gauche à droite
         scrollDirection: Axis.horizontal,
