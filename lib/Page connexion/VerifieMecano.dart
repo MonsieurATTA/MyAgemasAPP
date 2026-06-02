@@ -126,7 +126,7 @@ class _VerifieMecanoState extends State<Verifiemecano> {
                       child: Column(
                         children: [
                           Input(
-                            label: "Entrer votre le code de la carte AGEMAS",
+                            label: "Entrer le numéro de votre Agemas",
                             indication: "Ex: M3-00000",
                             controller: _numeroController,
                           ),

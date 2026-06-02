@@ -22,9 +22,9 @@ class boutonpharma extends StatelessWidget {
         ), // Especment à gauche à droite
         scrollDirection: Axis.horizontal,
         itemBuilder: ((context, index) => GestureDetector(
-          onTap: (() => Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: ((context) => PharmaciesApp())))),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CommuneListPage()),
+          ),
           child: Card(
             elevation: 10,
             shape: RoundedRectangleBorder(

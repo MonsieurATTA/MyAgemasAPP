@@ -67,7 +67,16 @@ class _CommuneListPageState extends State<CommuneListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Communes')),
+      appBar: AppBar(
+        title: const Text('Communes'),
+        leading: Navigator.canPop(context)
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : null,
+        automaticallyImplyLeading: Navigator.canPop(context),
+      ),
       body:
           _isLoading // Si l'application est en train de charger les données
           ? const Center(
@@ -174,7 +183,13 @@ class _PharmacyByCommunePageState extends State<PharmacyByCommunePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Pharmacies  ${widget.commune.commune}')),
+      appBar: AppBar(
+        title: Text('Pharmacies — ${widget.commune.commune}'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body:
           _isLoading // Si l'application est en train de charger les données
           ? const Center(child: CircularProgressIndicator())
