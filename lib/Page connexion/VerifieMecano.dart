@@ -46,7 +46,8 @@ class _VerifieMecanoState extends State<Verifiemecano> {
       if (statut == 0) {
         // Client n'existe pas
         setState(() {
-          _errorMessage = 'Ce client n\'existe pas dans notre base de données';
+          _errorMessage =
+              'Le numéro de carte Agemas est incorrect ou écrivez le numéro sans la dernière lettre. Exemple: M3-00000';
           _isLoading = false;
         });
       } else if (statut == 1) {
@@ -126,7 +127,7 @@ class _VerifieMecanoState extends State<Verifiemecano> {
                       child: Column(
                         children: [
                           Input(
-                            label: "Entrer le numéro de votre Agemas",
+                            label: "Entrer le numéro de votre carte Agemas",
                             indication: "Ex: M3-00000",
                             controller: _numeroController,
                           ),
